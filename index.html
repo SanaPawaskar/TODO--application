@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO-APPLICATION</title>
+    <style>
+        *{
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(34, 33, 33);
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+
+        }
+        .container{
+            display:inline;
+            text-align: center;
+        }
+        .btn{
+            background-color: rgb(192, 192, 81);
+            height: 40px;
+            text-align: center;
+            width: 125px;
+             /* margin-bottom: 5%; */
+             border-radius: 50px;
+          letter-spacing: 0.094em;
+        }
+        .inpt-div{
+            margin-bottom:3%;
+            border-radius: 5px;
+            height: 40px;
+            text-align: center;
+            width: 280px;
+        }
+        .main_todo_list{
+            color: azure;
+            width: 24rem;
+            display: grid;
+            grid-template-columns: 1fr 0.3fr;
+            align-items: center;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <br/>
+        <form >
+            <div class="box">
+                <input type="text" id="input-value" class="inpt-div"/>
+                <button class="btn">Add Todo </button>
+           </div>
+        </form>
+      <section class="todo-list-item">  </section>
+    </div>
+
+<script>
+    let inputValue = document.getElementById('input-value');
+    let addTask = document.querySelector('.btn');
+   let listofTaskadded = document.querySelector('.todo-list-item');
+   let localList =[];
+
+const getTodoValue =()=> JSON.parse(localStorage.getItem("youtubeTodo"));
+
+localList = getTodoValue()||[];
+
+const  addToList =(e) => {
+         e.preventDefault();
+         const taskList= inputValue.value.trim();
+         localList.push(taskList);
+         localList = [...new Set(localList)];
+         localStorage.setItem('youtubeTodo', JSON.stringify(localList));
+
+        const divElement = document.createElement('div');
+        divElement.classList.add("main_todo_list");
+        divElement.innerHTML = `<li>${inputValue.value}</li><button class="btn">delete</button>`
+        listofTaskadded.append(divElement);
+            
+            // Clear the input field after adding the task
+            inputValue.value = '';
+ }
+
+ const addElementforDisplay = (currElem)=>{
+    const divElement = document.createElement('div');
+        divElement.classList.add("main_todo_list");
+        divElement.innerHTML = `<li>${currElem.value}</li><button class="btn">delete</button>`
+        listofTaskadded( taskList);
+   }
+
+ const showTodo = ()=>{
+    localList.forEach((currElem) => {
+      addElementforDisplay(currElem);
+    })
+   
+ }
+ showTodo();
+    addTask.addEventListener("click", (e) => { addToList(e);});
+
+</script>
+</body>
+</html>
